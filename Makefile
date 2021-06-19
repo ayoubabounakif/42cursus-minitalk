@@ -19,15 +19,15 @@ $(LIBNAME):
 	make -C libft/
 	cp libft/$(LIBNAME) ./
 
-$(SERVER):
+$(SERVER): $(LIBNAME)
 	@echo "\033[0;32mCompilation in progress!"
-	gcc $(FLAGS) $(SERVER_SRC) libft.a -D BUFFER_SIZE=1024 -o $(EXEC_SERVER)
+	gcc -g3 $(FLAGS) $(SERVER_SRC) libft.a -D BUFFER_SIZE=1024 -o $(EXEC_SERVER)
 	@echo "\033[0;34mCompilation done."
 	rm -rf $(EXEC_SERVER).dSYM
 
-$(CLIENT):
+$(CLIENT): $(LIBNAME)
 	@echo "\033[0;32mCompilation in progress!"
-	gcc $(FLAGS) $(CLIENT_SRC) libft.a -D BUFFER_SIZE=1024 -o $(EXEC_CLIENT)
+	gcc -g3 $(FLAGS) $(CLIENT_SRC) libft.a -D BUFFER_SIZE=1024 -o $(EXEC_CLIENT)
 	@echo "\033[0;34mCompilation done."
 	rm -rf $(EXEC_CLIENT).dSYM
 
