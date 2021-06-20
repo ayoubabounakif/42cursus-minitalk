@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,25 +28,6 @@ int	pidSyntaxChecker(char *av)
 	return (EXIT_SUCCESS);
 }
 
-int	acknowledgmentSystem(int killRet, char *av)
-{
-	static int	clientAcknowledged;
-
-	if (killRet == -1)
-	{
-		ft_putstr_fd("Error\nProcess not found\n", STDERR_FILENO);
-		exit (EXIT_FAILURE);
-	}
-	if (killRet == 0 && clientAcknowledged == 0)
-	{
-		clientAcknowledged = 1;
-		ft_putstr_fd("Signal Acknowledged ---- [PID :", STDOUT_FILENO);
-		ft_putnbr_fd(ft_atoi(av), STDOUT_FILENO);
-		ft_putstr_fd("] is found\nMessage sent\n", STDOUT_FILENO);
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	client(char *av[])
 {
 	int		killRet;
@@ -64,7 +45,11 @@ int	client(char *av[])
 				killRet = kill(ft_atoi(av[1]), SIGUSR1);
 			else if ((av[2][i] >> current_bit) | 1)
 				killRet = kill(ft_atoi(av[1]), SIGUSR2);
-			acknowledgmentSystem(killRet, av[1]);
+			if (killRet == -1)
+			{
+				ft_putstr_fd("Error\nProcess not found\n", STDERR_FILENO);
+				exit(EXIT_FAILURE);
+			}
 		}
 	}
 	return (EXIT_SUCCESS);

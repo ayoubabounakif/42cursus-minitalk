@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,9 +14,15 @@
 
 static void	handleSIGUSR(int sigNo)
 {
+	static int	serverAcknowledged;
 	static int	current_bit;
 	static char	byte;
 
+	if ((SIGUSR1 == sigNo || SIGUSR2 == sigNo) && serverAcknowledged == 0)
+	{
+		serverAcknowledged = 1;
+		ft_putstr_fd("SIG acknowledged\nReceiving messages\n", STDOUT_FILENO);
+	}
 	byte += (SIGUSR1 == sigNo) << current_bit;
 	current_bit++;
 	if (current_bit == LAST_BIT)

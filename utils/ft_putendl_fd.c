@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mem_grow.c                                      :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khafni <khafni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 12:33:39 by khafni            #+#    #+#             */
-/*   Updated: 2021/02/17 12:34:07 by khafni           ###   ########.fr       */
+/*   Created: 2019/10/14 19:04:13 by aabounak          #+#    #+#             */
+/*   Updated: 2019/10/15 20:01:54 by aabounak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../includes/minitalk.h"
 
-#include "libft.h"
-
-void		*ft_mem_grow(void *addr, size_t old_size, size_t new_size)
+void	ft_putendl_fd(char *s, int fd)
 {
-	void *tmp;
-
-	tmp = malloc(new_size);
-	ft_memcpy(tmp, addr, old_size);
-	free(addr);
-	return (tmp);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

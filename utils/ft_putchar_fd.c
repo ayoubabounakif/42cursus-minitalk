@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khafni <khafni@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 12:52:12 by aabounak          #+#    #+#             */
-/*   Updated: 2021/02/17 16:46:39 by khafni           ###   ########.fr       */
+/*   Created: 2019/10/14 18:24:38 by aabounak          #+#    #+#             */
+/*   Updated: 2019/10/14 19:14:13 by aabounak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minitalk.h"
 
-t_list	*ft_lstnew(void *content)
+void	ft_putchar_fd(char c, int fd)
 {
-	t_list	*head;
-
-	head = NULL;
-	if (!(head = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
-	(head)->content = content;
-	(head)->next = NULL;
-	return (head);
+	write(fd, &c, 1);
 }

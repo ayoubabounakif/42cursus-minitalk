@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabounak <aabounak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 12:52:58 by aabounak          #+#    #+#             */
-/*   Updated: 2020/12/15 19:30:36 by aabounak         ###   ########.fr       */
+/*   Created: 2019/10/14 19:06:55 by aabounak          #+#    #+#             */
+/*   Updated: 2019/10/19 14:26:49 by aabounak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minitalk.h"
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_list	*current;
+	int		i;
 
-	current = lst;
-	if (current == NULL)
-		return (NULL);
-	while (current->next != NULL)
-		current = current->next;
-	return (current);
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			ft_putchar_fd(s[i], fd);
+			i++;
+		}
+	}
 }

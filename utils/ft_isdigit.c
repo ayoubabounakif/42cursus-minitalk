@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aabounak <aabounak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 19:06:55 by aabounak          #+#    #+#             */
-/*   Updated: 2019/10/19 14:26:49 by aabounak         ###   ########.fr       */
+/*   Created: 2019/10/14 17:54:31 by aabounak          #+#    #+#             */
+/*   Updated: 2020/12/19 10:27:50 by aabounak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putstr_fd(char *s, int fd)
+int	ft_isdigit(int i)
 {
-	int		i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
-	}
+	if (i >= 48 && i <= 57)
+		return (1);
+	return (0);
 }

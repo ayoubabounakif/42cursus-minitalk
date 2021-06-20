@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aabounak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 17:52:56 by aabounak          #+#    #+#             */
-/*   Updated: 2019/10/23 00:41:35 by aabounak         ###   ########.fr       */
+/*   Created: 2019/10/14 19:19:02 by aabounak          #+#    #+#             */
+/*   Updated: 2019/10/15 20:02:50 by aabounak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minitalk.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t			i;
-	unsigned char	*ptr;
-
-	i = 0;
-	ptr = b;
-	while (i < len)
+	if (n < 0)
 	{
-		ptr[i] = (unsigned char)c;
-		i++;
+		if (n == -2147483648)
+		{
+			ft_putstr_fd("-2147483648", fd);
+			return ;
+		}
+		n = -n;
+		ft_putchar_fd('-', fd);
 	}
-	return (b);
+	if (n < 10)
+	{
+		ft_putchar_fd(n + '0', fd);
+	}
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
+	}
 }
