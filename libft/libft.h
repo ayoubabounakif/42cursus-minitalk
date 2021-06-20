@@ -25,6 +25,10 @@
 # define FALSE 0
 #endif
 
+#ifndef LAST_BIT
+# define LAST_BIT 8
+#endif
+
 typedef	struct	s_list
 {
 	void			*content;
@@ -86,7 +90,7 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-void			ft_lstprint_int(t_list *lst); // The printing is typecasted to an int right now
+void			ft_lstprint_int(t_list *lst);
 
 /*
 **	stupid one usage version implementation of realloc

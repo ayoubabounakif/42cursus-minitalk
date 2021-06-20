@@ -14,64 +14,42 @@
 # include <signal.h>
 # include <errno.h>
 
-# include <string.h>
-
 /* https://www.programiz.com/c-programming/bitwise-operators */
-
-#define MAX_BYTES 64
-
-// static void	handleSIGUSR(int sigNo)
-// {
-// 	static int	current_bit = 0;
-// 	static char	byte = 0;
-
-// 	if (sigNo == SIGUSR1)
-// 	{
-		
-// 		ft_putchar_fd('1', STDOUT_FILENO);
-// 	}
-// 	if (sigNo == SIGUSR2)
-// 	{
-// 		ft_putchar_fd('0', STDOUT_FILENO);
-// 	}
-// 	// byte += (SIGUSR1 == sigNo) << current_bit;
-// 	// current_bit++;
-// 	// if (current_bit == 8)
-// 	// {
-// 	// 	current_bit = 0;
-// 	// 	write(STDOUT_FILENO, &byte, 1);
-// 	// 	byte = 0;
-// 	// }
-// }
 
 static void	handleSIGUSR(int sigNo)
 {
-	static int	current_bit = 0;
-	static int	current_byte = 0;
-	static char	byte = 0;
-	static char	output_bytes[MAX_BYTES];
-
-	// if (sigNo == SIGUSR1)
-	// 	ft_putchar_fd('1', STDOUT_FILENO);
-	// if (sigNo == SIGUSR2)
-	// 	ft_putchar_fd('0', STDOUT_FILENO);
-
-	if (sigNo == SIGUSR1)
-		byte &= ~(128 >> current_bit);
-	if (sigNo == SIGUSR2)
-		byte |= (128 >> current_bit);
-	// byte += (SIGUSR1 == sigNo) << current_bit;
+	static int	serverAcknowledged;
+	static int	current_bit;
+	static char	byte;
+	
+	if ((SIGUSR1 == sigNo || SIGUSR2 == sigNo) && serverAcknowledged == 0)
+	{
+		serverAcknowledged = 1;
+		ft_putstr_fd("SIG acknowledged\nReceiving messages\n", STDOUT_FILENO);
+	}
+	byte += (SIGUSR1 == sigNo) << current_bit;
 	current_bit++;
-	if (current_bit == 8)
+	if (current_bit == LAST_BIT)
 	{
 		current_bit = 0;
 		ft_putchar_fd(byte, STDOUT_FILENO);
-		// output_bytes[current_byte] = byte;
 		byte = 0;
-		// if (current_byte < (MAX_BYTES - 1))
-		// 	current_byte++;
 	}
-	// ft_putstr_fd(output_bytes, STDOUT_FILENO);
+}
+
+int			server(void)
+{
+	if (signal(SIGUSR1, handleSIGUSR) == SIG_ERR)
+	{
+		ft_putstr_fd("Error\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	if (signal(SIGUSR2, handleSIGUSR) == SIG_ERR)
+	{
+		ft_putstr_fd("Error\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int			main(int ac, char *av[])
@@ -86,20 +64,7 @@ int			main(int ac, char *av[])
 		ft_putstr_fd("Server running [PID]-> ", STDOUT_FILENO);
 		ft_putnbr_fd(getpid(), STDOUT_FILENO);
 		ft_putendl_fd(NULL, STDOUT_FILENO);
-
-		if (signal(SIGUSR1, handleSIGUSR) == SIG_ERR)
-		{
-			ft_putstr_fd("Error\n", STDERR_FILENO);
-			strerror(errno);
-			return (EXIT_FAILURE);
-		}
-		if (signal(SIGUSR2, handleSIGUSR) == SIG_ERR)
-		{
-			ft_putstr_fd("Error\n", STDERR_FILENO);
-			strerror(errno);
-			return (EXIT_FAILURE);
-		}
-
+		server();
 		while (TRUE)
 			pause();
 	}

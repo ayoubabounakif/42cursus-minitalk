@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "string.h": "c"
+        "string.h": "c",
+        "libft.h": "c",
+        "minitalk.h": "c"
     }
 }
